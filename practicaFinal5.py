@@ -7,20 +7,25 @@ spark = SparkSession.builder.appName("WordCount").getOrCreate()
 sc = spark.sparkContext
 
 # Load documents (one per line).
-documents = sc.textFile("hdfs:///datasets/gutenberg-txt-es/5*.txt").map(lambda line: line.split(" "))
-
+documents = sc.wholeTextFiles("hdfs:///user/mhoyosa2/gutenberg")
+palabras = documents.values().map(lambda line: line.split(" "))
+archivos = documents.keys().collect()
 hashingTF = HashingTF()
-tf = hashingTF.transform(documents)
+tf = hashingTF.transform(palabras)
 idf = IDF().fit(tf)
 tfidf = idf.transform(tf)
 
-#collectedTFIDF = tfidf.collect()
-print("tfidf listo========================#########################************************************====================================")
-clusters = KMeans.train(tfidf, 4, maxIterations=10, initializationMode="random")
+clusters = KMeans.train(tfidf, 4, maxIterations=10)
 
-print("Predict")
-agrupamiento = clusters.predict(tfidf).collect()
-print("===============================================================")
-print(agrupamiento)
+agrupamiento = clusters.predict(tfidf)
+agrupamiento = agrupamiento.collect()
+resultado = {}
+for i in range(len(agrupamiento)):
+    if agrupamiento[i] in resultado.keys():
+        resultado[agrupamiento[i]].append(archivos[i])
+    else:
+        resultado[agrupamiento[i]]= [archivos[i]]
 
+resultado = sc.parallelize(resultado.items())
+resultado.coalesce(1).saveAsTextFile("hdfs:///user/mhoyosa2/grupos")
 sc.stop()
