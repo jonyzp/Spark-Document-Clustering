@@ -7,9 +7,9 @@ Para nuestro caso el entrenamiento del K-means se realizo con un subconjunto de 
 
 ### Documentación de Usuario
 Para ejecutar el archivo .PY se deben de pasar por parametros: 
-* la ruta de la carpeta donde se encuentran los archivos .txt que desean ser analizados se debe de tener en cuenta que la ruta es una carpeta.
+* la ruta de la carpeta donde se encuentran los archivos .txt que desean ser analizados, se debe de tener en cuenta que la ruta es una carpeta.
+* La ruta sobre la cual se buscara la carpeta con el modelo entrenado y en caso tal que no exista entrenamiento o corridas previas del software ahi mismo se guardara el modelo entrenado
 * el numero de clusters que el usuario desea realizar.
-* el numero maximo de iteraciones.
 
 Por diseño de la arquitectura de spark, la carpeta sobre la cual se van a guardar los clusters no debe de existir, asi que si se desean realizar varias ejecuciones y guardarlas en la misma carpeta se debe de eliminar la carpeta antes de ejecutarlo.
 
