@@ -7,9 +7,14 @@ Para nuestro caso el entrenamiento del K-means se realizo con un subconjunto de 
 
 ### Documentación de Usuario
 Para ejecutar el archivo .PY se deben de pasar por parametros: 
+* La ruta donde desea guardar o cargar el modelo de K-Means previamente entrenado. Esta ruta es la direccion de un carpeta o forder no de un archivo. Para que el modelo sea guardado la ruta no debe de existir.
 * la ruta de la carpeta donde se encuentran los archivos .txt que desean ser analizados, se debe de tener en cuenta que la ruta es una carpeta.
-* La ruta sobre la cual se buscara la carpeta con el modelo entrenado y en caso tal que no exista entrenamiento o corridas previas del software ahi mismo se guardara el modelo entrenado
+* La ruta donde desea almacenar el archivo .txt con la agrupacion de los documentos. Esta ruta no debe de existir.
 * el numero de clusters que el usuario desea realizar.
+LOS ANTERIORES PARAMETROS SON OBLIGATORIOS, EL SIGUIENTE SE PUEDE OMITIR CUANDO SE ESTA SEGURO DE POSEER EL MODELO.
+* La ruta de la carpeta o folder donde se encuentran los documentos con los cuales desea generar el modelo de K-Means de entrenamiento.Tenga en cuenta que esta ruta no es utilizada en caso tal de que un modelo sea encontrado.
+ejemplo:
+`spark-submit practicaFinal5.py hdfs:///user/jzapat80/KMeansModel hdfs:///user/jzapat80/guty200 hdfs:///user/jzapat80/grupos 4 hdfs:///user/jzapat80/guty400`
 
 Por diseño de la arquitectura de spark, la carpeta sobre la cual se van a guardar los clusters no debe de existir, asi que si se desean realizar varias ejecuciones y guardarlas en la misma carpeta se debe de eliminar la carpeta antes de ejecutarlo.
 
