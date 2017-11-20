@@ -13,7 +13,6 @@ try:
     clusters = KMeansModel.load(sc, str(sys.argv[1]))
     #clusters = KMeansModel.load(sc, "hdfs:///user/jzapat80/KMeansModel")#ruta que se tiene que pedir por los argumentos
 except Exception as err:
-    print ("el directorio de entrenamiento no fue encontrado =) =) =) =) =) =) #) #) #) #) #) #) #)")
     print("entrenando el modelo con la ruta de entrenamiento ingresada")#ruta que se pide por argumentos
     # Carga los documentos con una ruta (regexp)
     #trainDataset = sc.wholeTextFiles("hdfs:///user/jzapat80/gutenbergDataset/txt")
