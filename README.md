@@ -40,11 +40,18 @@ Para ejecutar el archivo .py se debe de pasar por parámetros:
 LOS ANTERIORES PARÁMETROS SON OBLIGATORIOS, EL SIGUIENTE SE PUEDE OMITIR CUANDO SE ESTA SEGURO DE POSEER EL MODELO.
 * La ruta de la carpeta o folder donde se encuentran los documentos con los cuales desea generar el modelo de K-Means de entrenamiento. Tenga en cuenta que esta ruta no es utilizada en caso tal de que un modelo sea encontrado.
 
+Después de ejecutarlo hacer ls en hdfs a la carpeta que se ingresó como parámetro para guardar la salida del proceso. Si se ingresó como pathToOutput la carpeta `hdfs:///user/jzapat80/grupos` entonces se debe hacer lo siguiente:
+
+```
+hdfs dfs -ls grupos
+hdfs dfs -cat grupos/part*
+```
+
 ##### Modo de Ejecución:
 
 Para  ejecutarlo de forma local:
 
-*spark-submit <proyecto.py> <parametros(path, k, maximo de iteraciones)>*
+*spark-submit <proyecto.py> <parametros(pathToSaveTrainModel, pathDatasetToAnalyze, pathToOutput, k, pathToDataSetToTrain)>*
 * Ejemplo:
 ```
 spark-submit practicaFinal5.py hdfs:///user/jzapat80/KMeansModel hdfs:///user/jzapat80/guty200 hdfs:///user/jzapat80/grupos 4 hdfs:///user/jzapat80/guty400
@@ -52,7 +59,7 @@ spark-submit practicaFinal5.py hdfs:///user/jzapat80/KMeansModel hdfs:///user/jz
 
 Para ejecutar en el clúster:
 
-*spark-submit --master yarn --deploy-mode cluster <proyecto.py> <parametros(path, k, maximo de iteraciones)>*
+*spark-submit --master yarn --deploy-mode cluster <proyecto.py> <parametros(pathToSaveTrainModel, pathDatasetToAnalyze, pathToOutput, k, pathToDataSetToTrain)>*
 
 * Ejemplo:
 
@@ -72,6 +79,10 @@ Por diseño de la arquitectura de spark, la carpeta sobre la cual se van a guard
 `hdfs dfs -rm -r /user/jzapat80/KMea*` Borra el modelo que entrenamos
 
 `hdfs dfs -rm -r /user/jzapat80/grupos*` Borra la salida después de la primera ejecución
+
+`hdfs dfs -ls grupos` Para mostrar el nombre del .txt que arrojó como salida el programa
+
+`hdfs dfs -cat grupos/part*` Para mostrar la salida del programa
  
 ### Referencias:
 
