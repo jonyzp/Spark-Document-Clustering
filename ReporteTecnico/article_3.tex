@@ -96,16 +96,9 @@ The basic idea of the proposed implementations is to compare the efficiency betw
 
 \addcontentsline{toc}{section}{Introducción} % Adds this section to the table of contents
 
-Actualmente, debido a la gran cantidad de información que se encuentra en los medios, y a que está alojada en diferentes bases de datos, surge la necesidad de agrupar dicha información en un conjunto de datos que permita realizar búsquedas más rápidas, para ello se  crearon técnicas que permiten calcular la similitud que tienen dos textos; una de las más utilizadas es la minería de datos, la cual, como su nombre lo indica, se encarga de extraer las partes importantes de un archivo (en nuestro caso un texto). El enfoque que le dimos al proyecto está delimitado precisamente por esta área de la ciencia de datos, la cual nos va a permitir crear varios set de documentos y determinar el número de sets apropiados para agrupar la información, esto gracias a diferentes experimentos, además de generar un informe detallado evaluando el contraste (figura \ref{fig:graficoSerialParalelo},\ref{fig:graficoParaleloAceleracion}) de compartamientos entre el tiempo de ejecución del programa en su implementacion para HPC y el algoritmo implementado con Spark con diferentes datasets.
+Actualmente, debido a la gran cantidad de información que se encuentra en los medios, y a que está alojada en diferentes bases de datos, surge la necesidad de agrupar dicha información en un conjunto de datos que permita realizar búsquedas más rápidas, para ello se  crearon técnicas que permiten calcular la similitud que tienen dos textos; una de las más utilizadas es la minería de datos, la cual, como su nombre lo indica, se encarga de extraer las partes importantes de un archivo (en nuestro caso un texto). El enfoque que le dimos al proyecto está delimitado precisamente por esta área de la ciencia de datos, la cual nos va a permitir crear varios sets de documentos y determinar el número de sets apropiados para agrupar la información, esto gracias a diferentes experimentos, además de generar un informe detallado evaluando el contraste (figura \ref{fig:graficoParaleloVsSpark}) de compartamientos entre el tiempo de ejecución del programa en su implementacion para HPC y el algoritmo implementado con Spark con diferentes datasets.
 
 En este caso, decidimos hacer que la agrupación de documentos sea mediante el uso de los algoritmos k-means y TF-IDF, estos son el principal soporte para determinar la similitud entre documentos.
- 
- 
-% \begin{figure*}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
-% 	\includegraphics[width=\linewidth]{graficoSerialParalelo}
-% 	\caption{Gráfico Serial Vs. Paralelo}
- 	\label{fig:graficoSerialParalelo}
-% \end{figure*}
  
  
 % \begin{figure*}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
@@ -167,6 +160,8 @@ En este caso, decidimos hacer que la agrupación de documentos sea mediante el u
 	- Software overhead imposed by parallel languages, libraries, operating system, etc.
 	- Task termination time”  \cite{parallel_comp_lawrence_nat_lab}
 	
+	\item 
+	
 	
 \end{description}
 
@@ -180,15 +175,20 @@ En este caso, decidimos hacer que la agrupación de documentos sea mediante el u
 
 %------------------------------------------------
 
+ \begin{figure*}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
+	\includegraphics[width=\linewidth]{graficaParalellovsSpark}
+	\caption{Gráfico HPC Vs. Spark}
+	\label{fig:graficoParaleloVsSpark}
+\end{figure*}
 
 \section{Implementación}
 La implementación de esta practica fue realizada en python ya que es un lenguaje de programación muy sencillo de utilizar pero principalmente por que es un lenguaje sobre el cual se tiene mas experiencia.
-Para la implementacíon del codigo serial se utilizaron algunas bibliotecas como sys, math, numpy, pyspark.sql y  pyspark.mllib que nos permitieron realizar operaciones como lectura de ficheros, manejo de argumentos y brindar caracteristicas para el ordenamiento de alguas estructuras de datos, tambien se empleo numpy como un soporte para las estructuras de datos necesarias para la matriz que contenia todas las distancias entre documentos.
+Para la implementacíon del codigo se utilizo PySpark y ademas se utilizaron algunas bibliotecas como sys, math, numpy, pyspark.sql, pyspark.mllib y pyspark.mllib que nos permitieron realizar operaciones como lectura de ficheros, manejo de argumentos, estructuras de datos para facilitar el ordenamiento, almacenamiento y procesamiento de los datos, tambien se empleo numpy como un soporte para las estructuras de datos necesarias para la matriz que contenia todas las distancias entre documentos.
 
 
-A continuación compartimos nuestra implementación alojada en Github, en la cual basamos el análisis presentado en este estudio; al interior de este link podra encontrar un Readme.md con todas las instrucciones necesarias por poder correr satisfactoriamente los diferentes algoritmos: \href{https://github.com/jonyzp/HPC}{Repositorio de Github}
+A continuación compartimos nuestra implementación alojada en Github, en la cual basamos el análisis presentado en este estudio; al interior de este link podra encontrar un Readme.md con todas las instrucciones necesarias por poder correr satisfactoriamente los diferentes algoritmos: \href{https://github.com/jonyzp/Spark-Document-Clustering}{Repositorio de Github}
 
-\section{Análisis de resultados (secuencial vs. paralelo)}
+\section{Análisis de resultados (Spark vs. HPC)}
 
 A continuación presentamos el gráfico resultante del proceso de medición, el cual evidencia las aceleraciones entre datasets e implementaciones y en distintas ejecuciones.
 
@@ -216,18 +216,17 @@ A continuación presentamos el gráfico resultante del proceso de medición, el 
 \end{table}
 
 
-Se puede evidenciar la diferencia entre ejecutar el algoritmo de forma paralela a ejecutarlo de manera serial, aunque el algoritmo paralelo tiene un mayor orden de complejidad, logra reducir el tiempo que tarda en dar la solución, ya que el procesamiento se realiza de una manera distribuída
-
-
+Se puede evidenciar la diferencia entre ejecutar el algoritmo que es diseñado y ejecutado en clusters de Computación de Alto Rendimiento a ejecutar el software implementado sobre Spark, aunque el algoritmo paralelo tiene un mayor orden de complejidad, logra reducir el tiempo que tardaria en dar la solución un algoritmo serial, ya que el procesamiento se realiza de una manera distribuída, pero aun asi no logra superar los tiempos que nos arroja ejecutarlo sobre un cluster donde se encuentra configurada correctamente la tecnologia Spark.
 
 
 %------------------------------------------------
 \phantomsection
 \section*{Conclusiones} % The \section*{} command stops section numbering
 
-
 \begin{itemize}
-	\item 
+	\item Creemos que lo mas importante que se debe de resaltar aquí, es la gran diferencia que tienen ambas implementaciones en cuanto a la facilidad de desarrollo.
+	\item  Al ser Spark una tecnologia enfocada para trabajar de forma facil con HDFS, permite al usuario analizar una gran cantidad de archivos que se encuentran de forma distribuida sin influir de forma muy directa la programación de la implementación.
+	\item La Forma en la que Spark procesa los datos hace que inclusive la ejecución sobre 4 nodos de procesamiento demore menos que la ejecución sobre 50 nodos de procesamaiento que se hizo en HPC.
 \end{itemize}
 % So long and thanks for all the fish \cite{Figueredo:2009dg}.
 
@@ -249,6 +248,12 @@ En.wikipedia.org. (2017). Document clustering. [online] \href{https://en.wikiped
 \bibitem{Doc_clust_techniques} 
 Glaros.dtc.umn.edu. (2017). A Comparison of Document Clustering Techniques | Karypis Lab. [online] \href{http://glaros.dtc.umn.edu/gkhome/node/157}{Available clicking here} [Accessed 22 Oct. 2017].
 
+\bibitem{hpc} 
+insideHPC. (2017). What is high performance computing? - insideHPC. [online] \href{https://insidehpc.com/hpc-basic-training/what-is-hpc/}{Available clicking here}  [Accessed 22 Oct. 2017].
+
+\bibitem{hpc_def} 
+SearchDataCenter. (2017). What is high-performance computing (HPC)? - Definition from WhatIs.com. [online] 
+\href{http://searchdatacenter.techtarget.com/definition/high-performance-computing-HPC}{Available clicking here}   [Accessed 22 Oct. 2017].
 
 
 
