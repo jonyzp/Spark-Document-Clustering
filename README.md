@@ -1,4 +1,9 @@
 # Spark-Document-Clustering
+
+## Autores:
+* Mauricio Hoyos Ardila - mhoyosa2@eafit.edu.co
+* Jonathan Zapata Castaño - jzapat80@eafit.edu.co
+
 ## Tópicos Especiales en Telemática: Proyecto Big Data – Clústering de Documentos a partir de Métricas de Similitud
 Este proyecto plantea los retos de un típico buscador en la web (Google, Facebook, Amazon, Spotify, Netflix, entre otros), en los que se necesitan sistemas de recomendación que sugieran busquedas relacionadas, en donde se requiere hacer procesamiento natural del lenguaje, etc. 
 El diseño e implementación de este algoritmo ha sido pensado para ejecutarse con Spark, que es una nueva tecnologia diseñada especificamente para el tratamiento y procesamiento de gran volumen de datos.
@@ -8,16 +13,20 @@ Para nuestro caso el entrenamiento del K-means se realizo con un subconjunto de 
 ### Requisitos
 * Tener Apache Apark instalado en el sistema
 * Tener instalado Python 2.7 y pySpark (pip install pyspark).
-* Tener un dataset: https://drive.google.com/file/d/0B2Mzhc7popBga2RkcWZNcjlRTGM/edit
-* Copiar el dataset desde la máquina local al DCA:
+* Tener un dataset
+
+**Pasos para obtener el dataset:**
+
+1. Descargar un .zip con archivos .txt, puede descargar el set de datos de Gutenberg: https://drive.google.com/file/d/0B2Mzhc7popBga2RkcWZNcjlRTGM/edit
+2. Copiar el dataset desde la máquina local al DCA:
 
 Para Windows:
-`pscp <path>\Gutenberg.zip jzapat80@192.168.10.75:/home/<usuario>`
+`pscp <path>\Gutenberg.zip <usuario>@192.168.10.75:/home/<usuario>`
 
 Para Linux:
-`scp <path>\Gutenberg.zip jzapat80@192.168.10.75:/home/<usuario>`
+`scp <path>\Gutenberg.zip <usuario>@192.168.10.75:/home/<usuario>`
 
-Luego de hacer esto, meterse en el DCA, descomprimir el .zip y enviar la carpeta descomprimida al hdfs:
+3. Luego de hacer esto, meterse en el DCA, descomprimir el .zip y enviar la carpeta descomprimida al hdfs:
 `hdfs dfs -put -f <carpeta_descomprimida> hdfs:///user/jzapat80/gutenbergDataset`
 
 Tenga en cuenta que ningún nombre de archivo debe contener ':' en tal caso ejecutar: `rm *:*`
@@ -41,7 +50,7 @@ Para  ejecutarlo de forma local:
 spark-submit practicaFinal5.py hdfs:///user/jzapat80/KMeansModel hdfs:///user/jzapat80/guty200 hdfs:///user/jzapat80/grupos 4 hdfs:///user/jzapat80/guty400
 ```
 
-Para ejecutar el algoritmo en el cluster:
+Para ejecutar en el clúster:
 
 *spark-submit --master yarn --deploy-mode cluster <proyecto.py> <parametros(path, k, maximo de iteraciones)>*
 
@@ -50,7 +59,8 @@ Para ejecutar el algoritmo en el cluster:
 ```
 spark-submit practicaFinal5.py --master yarn --deploy-mode cluster hdfs:///user/jzapat80/KMeansModel hdfs:///user/jzapat80/guty200 hdfs:///user/jzapat80/grupos 4 hdfs:///user/jzapat80/guty400
 ```
-Por diseño de la arquitectura de spark, la carpeta sobre la cual se van a guardar los clusters no debe de existir, asi que si se desean realizar varias ejecuciones y guardarlas en la misma carpeta se debe de eliminar la carpeta antes de ejecutarlo.
+**Nota importante:**
+Por diseño de la arquitectura de spark, la carpeta sobre la cual se van a guardar los clusters no debe de existir, asi que si se desean realizar varias ejecuciones se debe de eliminar la carpeta antes de ejecutarlo.
 `hdfs dfs -rm -r /user/jzapat80/grupos*`
 
 ##### Comandos útiles:
