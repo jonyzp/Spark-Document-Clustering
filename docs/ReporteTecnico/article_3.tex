@@ -74,7 +74,7 @@
 
 \Abstract{Text mining is an analysis technique which has allowed us to implement a set of new applications through the time. Such as search engines in the web (Google, Facebook, Amazon, Spotify, Netflix, among others), suggestions systems, natural language processing and others.
 The document clustering techniques enable us to link a document with other similar documents according to a comparison metric.
-The basic idea of the proposed implementations is to compare the efficiency between computing in a single node and computing in a distributed network of nodes.}
+The basic idea of the proposed implementation is to compare the efficiency between computing in a distributed network of nodes with Spark and computing in a cluster using message passing interface.}
 
 %----------------------------------------------------------------------------------------
 
@@ -122,20 +122,17 @@ En este caso, decidimos hacer que la agrupación de documentos sea mediante el u
 	\item[K-means Algorithm] “The k-means method has been shown to be effective in producing good clustering results for many practical applications. However, a direct algorithm of k-means method requires time proportional to the product of number of patterns and number of clusters per iteration. This is computationally very expensive especially for large datasets.
 	The number of iterations required can vary in a wide range from a few to several thousand depending on the number of patterns, number of clusters, and the input data distribution. Thus, a direct implementation of the k-means method can be computationally very intensive. This is especially true for typical data mining applications with large number of pattern vectors” \cite{K-means}. 
 	
-	The algorithm is composed of the following steps:
+	"The algorithm is composed of the following steps:
 	Place K points into the space represented by the objects that are being clustered. These points represent initial group centroids.
-	
 	
 	Assign each object to the group that has the closest centroid.
 	
-	
 	When all objects have been assigned, recalculate the positions of the K centroids.
-	
 	
 	Repeat Steps 2 and 3 until the centroids no longer move. This produces a separation of the objects into groups from which the metric to be minimized can be calculated.
 	
-	figura sacada del mismo paper. \cite{K-means Algorithm}
-	The number of K is determinate by the user and indicate the number of clusters.
+	The number of K is determinate by the user and indicate the number of clusters."
+	\cite{K-means Algorithm}
 	
 	\item[Document Clustering] Is the act of collecting similar documents in sets. “Document clustering involves the use of descriptors and descriptor extraction. Descriptors are sets of words that describe the contents within the cluster. Document clustering is generally considered to be a centralized process. Examples of document clustering include web document clustering for search users.
 	A web search engine often returns thousands of pages in response to a broad query, making it difficult for users to browse or to identify relevant information. Clustering methods can be used to automatically group the retrieved documents into a list of meaningful categories, as is achieved by e.g. open source software such as Carrot2.
@@ -160,7 +157,9 @@ En este caso, decidimos hacer que la agrupación de documentos sea mediante el u
 	- Software overhead imposed by parallel languages, libraries, operating system, etc.
 	- Task termination time”  \cite{parallel_comp_lawrence_nat_lab}
 	
-	\item 
+	\item[Spark] "Apache Spark is a fast and general-purpose cluster computing system. It provides high-level APIs in Java, Scala, Python and R, and an optimized engine that supports general execution graphs. It also supports a rich set of higher-level tools including Spark SQL for SQL and structured data processing, MLlib for machine learning, GraphX for graph processing, and Spark Streaming." \cite{spark}
+	
+	\item[Hashing TF]: "This transformer is provided by the Spark machine learning library and it transforms each term (word) to its hash (calculated by a hashing function). The input to this transformer is a sequence of terms and the output is a sparse vector (from the linear algorithm module). A sparse vector stores the indices with active dimensions and the values in each dimension. In this case, each index is the output of the hashing function for the term and the value at the index is the frequency of the term in the data node (document)." \cite{tfidf_vectorization_spark}
 	
 	
 \end{description}
@@ -263,6 +262,13 @@ Computing.llnl.gov. (2017). Introduction to Parallel Computing. [online] \href{h
 
 \bibitem{Parallel Computing}
 Types of Parallelism. [online] \href{http://www.inf.ed.ac.uk/teaching/courses/pa/Notes/lecture02-types.pdf}{Available clicking here} [Accessed 22 Oct. 2017].
+
+\bibitem{tfidf_vectorization_spark}
+3Pillar Global. (2017). Topic Clusters with TF-IDF Vectorization using Apache Spark. [online]  \href{https://www.3pillarglobal.com/insights/topic-clusters-tf-idf-vectorization-using-apache-spark}{Available clicking here} [Accessed 22 Nov. 2017].
+
+\bibitem{spark}
+Spark.apache.org. (2017). Overview - Spark 2.2.0 Documentation. [online]  \href{https://spark.apache.org/docs/latest/index.html}{Available clicking here} [Accessed 22 Nov. 2017].
+
 
 \end{thebibliography}
 
