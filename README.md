@@ -40,11 +40,11 @@ Para ejecutar el archivo .py se debe de pasar por parámetros:
 LOS ANTERIORES PARÁMETROS SON OBLIGATORIOS, EL SIGUIENTE SE PUEDE OMITIR CUANDO SE ESTA SEGURO DE POSEER EL MODELO.
 * La ruta de la carpeta o folder donde se encuentran los documentos con los cuales desea generar el modelo de K-Means de entrenamiento. Tenga en cuenta que esta ruta no es utilizada en caso tal de que un modelo sea encontrado.
 
-Después de ejecutarlo hacer ls en hdfs a la carpeta que se ingresó como parámetro para guardar la salida del proceso. Si se ingresó como pathToOutput la carpeta `hdfs:///user/jzapat80/grupos` entonces se debe hacer lo siguiente:
+Después de ejecutarlo hacer ls en hdfs a la carpeta que se ingresó como parámetro para guardar la salida del proceso. Si se ingresó como pathToOutput la carpeta `hdfs:///user/jzapat80/output_grupos` entonces se debe hacer lo siguiente:
 
 ```
-hdfs dfs -ls grupos
-hdfs dfs -cat grupos/part*
+hdfs dfs -ls output_grupos
+hdfs dfs -cat output_grupos/part*
 ```
 
 ##### Modo de Ejecución:
@@ -54,7 +54,7 @@ Para  ejecutarlo de forma local:
 *spark-submit <proyecto.py> <parametros(pathToSaveTrainModel, pathDatasetToAnalyze, pathToOutput, k, pathToDataSetToTrain)>*
 * Ejemplo:
 ```
-spark-submit practicaFinal5.py hdfs:///user/jzapat80/KMeansModel hdfs:///user/jzapat80/guty200 hdfs:///user/jzapat80/grupos 4 hdfs:///user/jzapat80/guty400
+spark-submit practicaFinal5.py hdfs:///user/jzapat80/KMeansModel hdfs:///user/jzapat80/guty200 hdfs:///user/jzapat80/output_grupos 4 hdfs:///user/jzapat80/guty400
 ```
 
 Para ejecutar en el clúster:
@@ -64,11 +64,12 @@ Para ejecutar en el clúster:
 * Ejemplo:
 
 ```
-spark-submit practicaFinal5.py --master yarn --deploy-mode cluster hdfs:///user/jzapat80/KMeansModel hdfs:///user/jzapat80/guty200 hdfs:///user/jzapat80/grupos 4 hdfs:///user/jzapat80/guty400
+spark-submit practicaFinal5.py --master yarn --deploy-mode cluster hdfs:///user/jzapat80/KMeansModel hdfs:///user/jzapat80/guty200 hdfs:///user/jzapat80/output_grupos 4 hdfs:///user/jzapat80/guty400
 ```
 **Nota importante:**
 Por diseño de la arquitectura de spark, la carpeta sobre la cual se van a guardar los clusters no debe de existir, asi que si se desean realizar varias ejecuciones se debe de eliminar la carpeta antes de ejecutarlo.
-`hdfs dfs -rm -r /user/jzapat80/grupos*`
+`hdfs dfs -rm -r /user/jzapat80/output_grupos*`
+O la otra opción es tirarlo siempre a una carpeta de salida diferente: `~/ouput_grupos1`, `~/ouput_grupos2`, ... y luego ejecutar `hdfs dfs -cat output_grupos<n>/part*`
 
 ##### Comandos útiles:
 
@@ -78,11 +79,11 @@ Por diseño de la arquitectura de spark, la carpeta sobre la cual se van a guard
 
 `hdfs dfs -rm -r /user/jzapat80/KMea*` Borra el modelo que entrenamos
 
-`hdfs dfs -rm -r /user/jzapat80/grupos*` Borra la salida después de la primera ejecución
+`hdfs dfs -rm -r /user/jzapat80/output_grupos*` Borra la salida después de la primera ejecución
 
-`hdfs dfs -ls grupos` Para mostrar el nombre del .txt que arrojó como salida el programa
+`hdfs dfs -ls output_grupos` Para mostrar el nombre del .txt que arrojó como salida el programa
 
-`hdfs dfs -cat grupos/part*` Para mostrar la salida del programa
+`hdfs dfs -cat output_grupos/part*` Para mostrar la salida del programa
  
 ### Referencias:
 
